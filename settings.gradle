@@ -1,2 +1,3 @@
 rootProject.name = 'springboot_pj_jeongseop'
+include 'java'
 
