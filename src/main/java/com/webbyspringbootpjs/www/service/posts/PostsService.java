@@ -2,6 +2,7 @@ package com.webbyspringbootpjs.www.service.posts;
 
 import com.webbyspringbootpjs.www.domain.posts.Posts;
 import com.webbyspringbootpjs.www.domain.posts.PostsRepository;
+import com.webbyspringbootpjs.www.web.dto.PostsListResponseDto;
 import com.webbyspringbootpjs.www.web.dto.PostsResponseDto;
 import com.webbyspringbootpjs.www.web.dto.PostsSaveRequestDto;
 
@@ -34,7 +35,7 @@ public class PostsService {
     }
 
     @Transactional
-    public void delete (Long id) {
+    public void delete(Long id) {
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + id));
 
@@ -49,4 +50,11 @@ public class PostsService {
         return new PostsResponseDto(entity);
     }
 
+    @Transactional(readOnly = true)
+    public List<PostsListResponseDto> findAllDesc() {
+        return postsRepository.findAllDesc().stream()
+                .map(PostsListResponseDto::new)
+                .collect(Collectors.toList());
+
+    }
 }
